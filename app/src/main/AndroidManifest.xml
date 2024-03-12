@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DuplicateActivity"
         tools:targetApi="31">
         <activity
+            android:name=".VideoPlayer"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

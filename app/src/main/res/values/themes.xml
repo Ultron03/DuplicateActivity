@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.DuplicateActivity" parent="Base.Theme.DuplicateActivity" />
+    <style name="MyRipple">
+        <item name="colorControlHighlight">@color/light_blue</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.duplicateactivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,7 +35,7 @@ class MainActivity() : AppCompatActivity() , RecyclerViewAdapter.OnItemLongClick
     private lateinit var imgcancel:ImageView
     private lateinit var txtBanner:TextView
     private lateinit var selectAll:CheckBox
-
+    private lateinit var btn_floating:FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -140,6 +142,10 @@ class MainActivity() : AppCompatActivity() , RecyclerViewAdapter.OnItemLongClick
         cancelSelectionofItem()
         deleteSelectedItem()
         selectAllItem()
+
+        btn_floating.setOnClickListener {
+            startActivity(Intent(this,VideoPlayer::class.java))
+        }
     }
     private fun init(){
         rv_compressedImages = findViewById(R.id.rv_compressedImages)
@@ -151,7 +157,7 @@ class MainActivity() : AppCompatActivity() , RecyclerViewAdapter.OnItemLongClick
         imgcancel = findViewById(R.id.img_cancel)
         txtBanner = findViewById(R.id.banner_text)
         selectAll = findViewById(R.id.btn_selectall)
-
+        btn_floating = findViewById(R.id.floating_action)
     }
 
     private fun selectAllItem(){
