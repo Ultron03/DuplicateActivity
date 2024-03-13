@@ -1,5 +1,6 @@
 package com.example.duplicateactivity
 
+import androidx.media3.common.MediaItem
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,9 +10,12 @@ import android.widget.LinearLayout
 import android.widget.MediaController
 import android.widget.SeekBar
 import android.widget.VideoView
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 
 class VideoPlayer : AppCompatActivity() {
-    private lateinit var videoPlayer: VideoView
+    private lateinit var videoPlayer: ExoPlayer
+    private lateinit var pleyer:PlayerView
     private lateinit var forwardVideo:ImageButton
     private lateinit var playVideo:ImageButton
     private lateinit var pauseVideo:ImageButton
@@ -25,12 +29,13 @@ class VideoPlayer : AppCompatActivity() {
         init()
         //path of video
         val vPath = "android.resource://"+packageName+"/raw/fifth_video"
-        val mediaController= MediaController(this)
 
-        videoPlayer.setMediaController(mediaController)
-        videoPlayer.setVideoURI(Uri.parse(vPath))
-        videoPlayer.requestFocus()
-        videoPlayer.start()
+        videoPlayer = ExoPlayer.Builder(this).build()
+        val medialItem = MediaItem.fromUri(Uri.parse(vPath))
+        videoPlayer.setMediaItem(medialItem)
+        videoPlayer.prepare()
+        videoPlayer.play()
+        pleyer.player = videoPlayer
 //        resumeVideoBtn()
 //        pauseVideoBtn()
     }
@@ -56,8 +61,23 @@ class VideoPlayer : AppCompatActivity() {
 //            pauseVideo.visibility = View.GONE
 //        }
 //    }
+
+    override fun onStart() {
+        super.onStart()
+        videoPlayer.playWhenReady = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        videoPlayer.playWhenReady = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        videoPlayer.release()
+    }
     private fun init(){
-        videoPlayer = findViewById(R.id.videoView)
+        pleyer = findViewById(R.id.videoView)
 //        forwardVideo = findViewById(R.id.videoView_forward)
 //        playVideo = findViewById(R.id.videoView_play)
 //        pauseVideo = findViewById(R.id.videoView_pause)
